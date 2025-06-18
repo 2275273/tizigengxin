@@ -1,10 +1,2 @@
 name = "my-subscription-worker"
 type = "javascript"
-account_id = "<你的CF账号ID>"
-workers_dev = true
-
-kv_namespaces = [
-  { binding = "SUB_KV", id = "<你的KV命名空间ID>" }
-]
-
-vars = { SECRET_TOKEN = "你的自定义密钥" }
