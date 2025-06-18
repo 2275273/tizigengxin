@@ -32,4 +32,4 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
           git commit -m "更新订阅内容 [skip ci]" || echo "没有改动，跳过提交"
-          git push https://x-access-token:${jxc}@github.com/2275273/tizigengxin.git HEAD:main
+          git push https://x-access-token:${JXC}@github.com/2275273/tizigengxin.git HEAD:main
