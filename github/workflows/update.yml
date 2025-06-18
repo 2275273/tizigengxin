@@ -2,7 +2,7 @@ name: Update Subscription
 
 on:
   schedule:
-    - cron: '0 * * * *'   # 每小时执行
+    - cron: '0 * * * *'  # 每小时执行一次，也可以自定义
   workflow_dispatch:
 
 jobs:
@@ -13,4 +13,5 @@ jobs:
       - name: Call CF Worker update endpoint
         run: |
           curl -X POST "https://my-cf-subscription.pages.dev" \
-            -H "Authorization: Bearer jxc"
+            -H "Authorization: Bearer ${{ secrets.CF_SECRET_TOKEN }}"
+            
