@@ -1,12 +1,9 @@
-name: Update Subscription
+name: Update Subscription Content
 
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
-
-permissions:
-  contents: write
+    - cron: '0 * * * *'  # 每小时执行一次抓取和更新
+  workflow_dispatch:     # 支持手动触发
 
 jobs:
   update:
@@ -17,13 +14,18 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Fetch subscription content
-        run: |
-          curl -s "https://tizi.239000.xyz/download/sub" > index
+        run: curl -s https://tizi.239000.xyz/download/sub -o sub.txt
 
-      - name: Commit and push changes
+      - name: Generate index.html with <pre> wrapper
+        run: |
+          echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Subscription</title></head><body><pre>' > index.html
+          cat sub.txt >> index.html
+          echo '</pre></body></html>' >> index.html
+
+      - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index
+          git add index.html
           git commit -m "Update subscription [skip ci]" || echo "No changes to commit"
           git push
