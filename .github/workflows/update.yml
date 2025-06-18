@@ -1,31 +1,33 @@
-name: Update Subscription Content
+name: 更新订阅内容
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 每小时执行一次抓取和更新
-  workflow_dispatch:     # 支持手动触发
+    - cron: '0 * * * *'  # 每小时执行一次
+  workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 检出代码
         uses: actions/checkout@v3
 
-      - name: Fetch subscription content
+      - name: 抓取订阅内容
         run: curl -s https://tizi.239000.xyz/download/sub -o sub.txt
 
-      - name: Generate index.html with <pre> wrapper
+      - name: 生成带 <pre> 的 index.html
         run: |
-          echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Subscription</title></head><body><pre>' > index.html
+          echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>订阅内容</title></head><body><pre>' > index.html
           cat sub.txt >> index.html
           echo '</pre></body></html>' >> index.html
 
-      - name: Commit changes
+      - name: 提交并推送更新
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git commit -m "Update subscription [skip ci]" || echo "No changes to commit"
-          git push
+          git commit -m "更新订阅内容 [skip ci]" || echo "没有改动，跳过提交"
+          git push https://x-access-token:${PAT_TOKEN}@github.com/2275273/tizigengxin.git HEAD:main
