@@ -2,11 +2,11 @@ name: Update Subscription
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 * * * *'   # 每小时抓取一次，可改
   workflow_dispatch:
 
 permissions:
-  contents: write   # 👈 必须有，允许 Actions 提交回仓库
+  contents: write  # 👈 必须要有，给推送权限
 
 jobs:
   update:
