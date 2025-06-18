@@ -12,5 +12,5 @@ jobs:
     steps:
       - name: Call CF Worker update endpoint
         run: |
-          curl -X POST "https://<你的worker子域名>.workers.dev" \
-            -H "Authorization: Bearer 你的自定义密钥"
+          curl -X POST "https://my-cf-subscription.pages.dev" \
+            -H "Authorization: Bearer jxc"
