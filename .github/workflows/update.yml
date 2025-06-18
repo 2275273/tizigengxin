@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: 检出代码
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: 抓取订阅内容
         run: curl -s https://tizi.239000.xyz/download/sub -o sub.txt
@@ -24,10 +26,10 @@ jobs:
 
       - name: 提交并推送更新
         env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+          jxc: ${{ secrets.jxc }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index.html
           git commit -m "更新订阅内容 [skip ci]" || echo "没有改动，跳过提交"
-          git push https://x-access-token:${PAT_TOKEN}@github.com/2275273/tizigengxin.git HEAD:main
+          git push https://x-access-token:${jxc}@github.com/2275273/tizigengxin.git HEAD:main
