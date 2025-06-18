@@ -2,25 +2,28 @@ name: Update Subscription
 
 on:
   schedule:
-    - cron: '0 * * * *'   # 每小时执行
+    - cron: '0 * * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write   # 👈 必须有，允许 Actions 提交回仓库
 
 jobs:
   update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Fetch subscription
+      - name: Fetch subscription content
         run: |
           curl -s "https://tizi.239000.xyz/download/sub" > index
 
-      - name: Commit and push
+      - name: Commit and push changes
         run: |
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git add index
-          git commit -m "Update subscription [skip ci]" || echo "No changes"
+          git commit -m "Update subscription [skip ci]" || echo "No changes to commit"
           git push
