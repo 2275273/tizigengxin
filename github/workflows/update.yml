@@ -1,0 +1,16 @@
+name: Update Subscription
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # 每小时执行
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call CF Worker update endpoint
+        run: |
+          curl -X POST "https://<你的worker子域名>.workers.dev" \
+            -H "Authorization: Bearer 你的自定义密钥"
