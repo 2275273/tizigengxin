@@ -2,7 +2,7 @@ name: Update subscription
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 每小时执行
+    - cron: '*/5 * * * *'  # 每小时执行
   workflow_dispatch:
 
 permissions:
